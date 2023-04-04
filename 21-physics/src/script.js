@@ -1,5 +1,3 @@
-// TODO ボックスを追加
-
 import * as THREE from 'three'
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'lil-gui'
@@ -45,6 +43,21 @@ const canvas = document.querySelector('canvas.webgl')
 // Scene
 const scene = new THREE.Scene()
 
+// Sounds
+const hitSound = new Audio('/sounds/hit.mp3')
+
+const playHitSound = (collision) =>
+{
+    const impactStrength = collision.contact.getImpactVelocityAlongNormal()
+
+    if(impactStrength > 1.5)
+    {
+        hitSound.volume = Math.random()
+        hitSound.currentTime = 0
+        hitSound.play()
+    }
+}
+
 /**
  * Textures
  */
@@ -65,6 +78,9 @@ const environmentMapTexture = cubeTextureLoader.load([
  */
 // world
 const world = new CANNON.World()
+world.broadphase = new CANNON.SAPBroadphase(world) // broadphaseとは衝突判定のこと
+world.allowSleep = true // allowSleepとはスリープを許可するかどうかのこと
+// スリープとは物体が動かなくなったときに、物理演算を行わないこと
 world.gravity.set(0, -9.82, 0)
 
 // Materials
@@ -203,6 +219,7 @@ const createSphere = (radius, position) => {
         material: defaultMaterial
     })
     body.position.copy(position)
+    body.addEventListener('collide', playHitSound)
     world.addBody(body)
 
     // save in objectsToUpdate
@@ -241,6 +258,7 @@ const createBox = (width, height, depth, position) => {
         material: defaultMaterial
     })
     body.position.copy(position)
+    body.addEventListener('collide', playHitSound)
     world.addBody(body)
 
     // save in objectsToUpdate
