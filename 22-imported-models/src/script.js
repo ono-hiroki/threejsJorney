@@ -39,20 +39,13 @@ const gltfLoader = new GLTFLoader()
 // )
 
 gltfLoader.load(
-    '/models/Duck/glTF/Duck.gltf',
+    '/models/FlightHelmet/glTF/FlightHelmet.gltf',
     (gltf) =>
     {
-        console.log(gltf)
+        scene.add(gltf.scene)
     }
 )
 
-gltfLoader.load(
-    '/models/Duck/glTF/Duck.gltf',
-    (gltf) =>
-    {
-        scene.add(gltf.scene.children[0])
-    }
-)
 
 
 /**
