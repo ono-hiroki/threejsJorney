@@ -1,8 +1,9 @@
 import * as THREE from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'lil-gui'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
-
+import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js'
+import {DRACOLoader} from "three/examples/jsm/loaders/DRACOLoader";
+// import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 /**
  * Base
  */
@@ -18,34 +19,19 @@ const scene = new THREE.Scene()
 /**
  * Models
  */
+const dracoLoader = new DRACOLoader()
+dracoLoader.setDecoderPath('/draco/')
+
 const gltfLoader = new GLTFLoader()
-// gltfLoader.load(
-//     '/models/Duck/glTF/Duck.gltf',
-//     (gltf) =>
-//     {
-//         console.log('success')
-//         console.log(gltf)
-//     },
-//     (progress) =>
-//     {
-//         console.log('progress')
-//         console.log(progress)
-//     },
-//     (error) =>
-//     {
-//         console.log('error')
-//         console.log(error)
-//     }
-// )
+gltfLoader.setDRACOLoader(dracoLoader)
 
 gltfLoader.load(
-    '/models/FlightHelmet/glTF/FlightHelmet.gltf',
-    (gltf) =>
-    {
+    '/models/Fox/glTF/Fox.gltf',
+    (gltf) => {
+        gltf.scene.scale.set(0.025, 0.025, 0.025)
         scene.add(gltf.scene)
     }
 )
-
 
 
 /**
@@ -60,7 +46,7 @@ const floor = new THREE.Mesh(
     })
 )
 floor.receiveShadow = true
-floor.rotation.x = - Math.PI * 0.5
+floor.rotation.x = -Math.PI * 0.5
 scene.add(floor)
 
 /**
@@ -73,10 +59,10 @@ const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6)
 directionalLight.castShadow = true
 directionalLight.shadow.mapSize.set(1024, 1024)
 directionalLight.shadow.camera.far = 15
-directionalLight.shadow.camera.left = - 7
+directionalLight.shadow.camera.left = -7
 directionalLight.shadow.camera.top = 7
 directionalLight.shadow.camera.right = 7
-directionalLight.shadow.camera.bottom = - 7
+directionalLight.shadow.camera.bottom = -7
 directionalLight.position.set(5, 5, 5)
 scene.add(directionalLight)
 
@@ -88,8 +74,7 @@ const sizes = {
     height: window.innerHeight
 }
 
-window.addEventListener('resize', () =>
-{
+window.addEventListener('resize', () => {
     // Update sizes
     sizes.width = window.innerWidth
     sizes.height = window.innerHeight
@@ -133,8 +118,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 const clock = new THREE.Clock()
 let previousTime = 0
 
-const tick = () =>
-{
+const tick = () => {
     const elapsedTime = clock.getElapsedTime()
     const deltaTime = elapsedTime - previousTime
     previousTime = elapsedTime
