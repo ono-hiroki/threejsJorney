@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'lil-gui'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 /**
  * Base
@@ -79,6 +80,7 @@ window.addEventListener('resize', () =>
 /**
  * Mouse
  */
+const gltfLoader = new GLTFLoader()
 const mouse = new THREE.Vector2()
 
 window.addEventListener('mousemove', (event) =>
@@ -89,6 +91,36 @@ window.addEventListener('mousemove', (event) =>
 })
 
 let currentIntersect = null
+
+window.addEventListener('click', () =>
+{
+    if(currentIntersect)
+    {
+        switch(currentIntersect.object)
+        {
+            case object1:
+                console.log('click on object 1')
+                break
+
+            case object2:
+                console.log('click on object 2')
+                break
+
+            case object3:
+                console.log('click on object 3')
+                break
+        }
+    }
+})
+
+gltfLoader.load(
+    './models/Duck/glTF-Binary/Duck.glb',
+    (gltf) =>
+    {
+        gltf.scene.position.y = - 1.2
+        scene.add(gltf.scene)
+    }
+)
 
 /**
  * Camera
@@ -110,6 +142,18 @@ const renderer = new THREE.WebGLRenderer({
 })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+/**
+ * Lights
+ */
+// Ambient light
+const ambientLight = new THREE.AmbientLight('#ffffff', 0.3)
+scene.add(ambientLight)
+
+// Directional light
+const directionalLight = new THREE.DirectionalLight('#ffffff', 0.7)
+directionalLight.position.set(1, 2, 3)
+scene.add(directionalLight)
 
 /**
  * Animate
@@ -154,6 +198,8 @@ const tick = () =>
 
         currentIntersect = null
     }
+
+
 
     // Update controls
     controls.update()
