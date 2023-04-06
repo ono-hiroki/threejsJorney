@@ -77,6 +77,20 @@ window.addEventListener('resize', () =>
 })
 
 /**
+ * Mouse
+ */
+const mouse = new THREE.Vector2()
+
+window.addEventListener('mousemove', (event) =>
+{
+    mouse.x = event.clientX / sizes.width * 2 - 1
+    mouse.y = - (event.clientY / sizes.height) * 2 + 1
+
+    console.log(mouse)
+})
+
+
+/**
  * Camera
  */
 // Base camera
@@ -118,18 +132,22 @@ const tick = () =>
 
     raycaster.set(rayOrigin, rayDirection)
 
-    const objectsToTest = [object1, object2, object3]
-    const intersects = raycaster.intersectObjects(objectsToTest) // raycasterと衝突したオブジェクトを配列で返す
-    console.log(intersects)
+    raycaster.setFromCamera(mouse, camera)
 
-    for(const object of objectsToTest)
-    {
-        object.material.color.set('#ff0000')
-    }
+    const objectsToTest = [object1, object2, object3]
+    const intersects = raycaster.intersectObjects(objectsToTest)
 
     for(const intersect of intersects)
     {
-        intersect.object.material.color.set('#0000ff') // raycasterと衝突したオブジェクトの色を変更
+        intersect.object.material.color.set('#0000ff')
+    }
+
+    for(const object of objectsToTest)
+    {
+        if(!intersects.find(intersect => intersect.object === object))
+        {
+            object.material.color.set('#ff0000')
+        }
     }
 
     // Update controls
