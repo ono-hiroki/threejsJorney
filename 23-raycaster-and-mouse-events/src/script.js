@@ -113,12 +113,14 @@ window.addEventListener('click', () =>
     }
 })
 
+let model = null
 gltfLoader.load(
     './models/Duck/glTF-Binary/Duck.glb',
     (gltf) =>
     {
-        gltf.scene.position.y = - 1.2
-        scene.add(gltf.scene)
+        model = gltf.scene
+        model.position.y = - 1.2
+        scene.add(model)
     }
 )
 
@@ -199,7 +201,11 @@ const tick = () =>
         currentIntersect = null
     }
 
-
+    if(model)
+    {
+        const modelIntersects = raycaster.intersectObject(model)
+        console.log(modelIntersects)
+    }
 
     // Update controls
     controls.update()
