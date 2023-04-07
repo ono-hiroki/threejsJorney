@@ -28,9 +28,10 @@ gltfLoader.setDRACOLoader(dracoLoader)
 let mixer = null
 
 gltfLoader.load(
-    '/models/hamburger.glb',
+    '/models/done.gltf',
     (gltf) =>
     {
+        console.log(gltf)
         scene.add(gltf.scene)
     }
 )

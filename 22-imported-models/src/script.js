@@ -28,7 +28,7 @@ gltfLoader.setDRACOLoader(dracoLoader)
 let mixer = null
 
 gltfLoader.load(
-    '/models/Fox/glTF/Fox.gltf',
+    '/models/done.gltf',
     (gltf) => {
         console.log(gltf)
         gltf.scene.scale.set(0.025, 0.025, 0.025)
@@ -36,7 +36,7 @@ gltfLoader.load(
 
         // Animation
         mixer = new THREE.AnimationMixer(gltf.scene)
-        const action = mixer.clipAction(gltf.animations[2])
+        const action = mixer.clipAction(gltf.animations[0])
         action.play()
     }
 )
