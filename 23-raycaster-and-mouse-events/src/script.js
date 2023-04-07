@@ -119,6 +119,7 @@ gltfLoader.load(
     (gltf) =>
     {
         model = gltf.scene
+        console.log(model)
         model.position.y = - 1.2
         scene.add(model)
     }
@@ -204,8 +205,17 @@ const tick = () =>
     if(model)
     {
         const modelIntersects = raycaster.intersectObject(model)
-        console.log(modelIntersects)
+
+        if(modelIntersects.length)
+        {
+            model.scale.set(1.2, 1.2, 1.2)
+        }
+        else
+        {
+            model.scale.set(1, 1, 1)
+        }
     }
+
 
     // Update controls
     controls.update()
