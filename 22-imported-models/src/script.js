@@ -28,7 +28,7 @@ gltfLoader.setDRACOLoader(dracoLoader)
 let mixer = null
 
 gltfLoader.load(
-    '/models/bear4.glb',
+    '/models/room-yuki.glb',
     (gltf) => {
         console.log(gltf)
         gltf.scene.scale.set(0.5, 0.5, 0.5)
