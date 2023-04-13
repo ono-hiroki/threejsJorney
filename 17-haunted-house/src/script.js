@@ -94,7 +94,7 @@ const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
 
 /**
- * Renderer
+ * Renderer.js
  */
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas

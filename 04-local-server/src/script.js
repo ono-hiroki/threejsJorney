@@ -58,7 +58,7 @@ camera.position.z = 3
 scene.add(camera)
 
 /**
- * Renderer
+ * Renderer.js
  */
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas

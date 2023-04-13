@@ -114,7 +114,7 @@ scene.add(sphere, plane, torus)
 
 
 /**
- * Renderer
+ * Renderer.js
  */
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas

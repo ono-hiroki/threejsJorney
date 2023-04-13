@@ -105,7 +105,7 @@ controls.target.set(0, 1, 0)
 controls.enableDamping = true
 
 /**
- * Renderer
+ * Renderer.js
  */
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas

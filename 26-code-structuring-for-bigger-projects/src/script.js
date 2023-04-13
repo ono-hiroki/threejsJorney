@@ -164,7 +164,7 @@ const experience = new Experience(document.querySelector('canvas.webgl'))
 // controls.enableDamping = true
 //
 // /**
-//  * Renderer
+//  * Renderer.js
 //  */
 // const renderer = new THREE.WebGLRenderer({
 //     canvas: canvas,

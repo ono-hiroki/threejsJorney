@@ -23,7 +23,7 @@ const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height) // 75
 camera.position.z = 3 // カメラの位置をz軸方向に3移動 手前が正
 scene.add(camera) // シーンにカメラを追加
 
-// Renderer
+// Renderer.js
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas
 })
