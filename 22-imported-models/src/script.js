@@ -3,7 +3,7 @@ import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'lil-gui'
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js'
 import {DRACOLoader} from "three/examples/jsm/loaders/DRACOLoader";
-// import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
+// import { DRACOLoader } from 'hree/examples/jsm/loaders/DRACOLoader.js'
 /**
  * Base
  */
@@ -28,17 +28,16 @@ gltfLoader.setDRACOLoader(dracoLoader)
 let mixer = null
 
 gltfLoader.load(
-    '/models/room-yuki.glb',
+    '/models/room-yuki5.glb',
     (gltf) => {
-        console.log(gltf)
-        gltf.scene.scale.set(0.5, 0.5, 0.5)
-        gltf.scene.position.set(0, 2, 0)
+        gltf.scene.scale.set(0.7, 0.7, 0.7)
+        gltf.scene.position.set(0, 0.8, 0)
         scene.add(gltf.scene)
 
         // Animation
-        mixer = new THREE.AnimationMixer(gltf.scene)
-        const action = mixer.clipAction(gltf.animations[0])
-        action.play()
+        // mixer = new THREE.AnimationMixer(gltf.scene)
+        // const action = mixer.clipAction(gltf.animations[0])
+        // action.play()
     }
 )
 
@@ -46,17 +45,17 @@ gltfLoader.load(
 /**
  * Floor
  */
-const floor = new THREE.Mesh(
-    new THREE.PlaneGeometry(10, 10),
-    new THREE.MeshStandardMaterial({
-        color: '#444444',
-        metalness: 0,
-        roughness: 0.5
-    })
-)
-floor.receiveShadow = true
-floor.rotation.x = -Math.PI * 0.5
-scene.add(floor)
+// const floor = new THREE.Mesh(
+//     new THREE.PlaneGeometry(10, 10),
+//     new THREE.MeshStandardMaterial({
+//         color: '#444444',
+//         metalness: 0,
+//         roughness: 0.5
+//     })
+// )
+// floor.receiveShadow = true
+// floor.rotation.x = -Math.PI * 0.5
+// scene.add(floor)
 
 /**
  * Lights
@@ -73,7 +72,12 @@ directionalLight.shadow.camera.top = 7
 directionalLight.shadow.camera.right = 7
 directionalLight.shadow.camera.bottom = -7
 directionalLight.position.set(5, 5, 5)
+// ライトの明かりを強くする
+directionalLight.intensity = 3
 scene.add(directionalLight)
+
+//空間の色を白にかえる
+scene.background = new THREE.Color(0xffffff)
 
 /**
  * Sizes
@@ -102,7 +106,12 @@ window.addEventListener('resize', () => {
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.set(2, 2, 2)
+camera.position.set( -1.1722510503294319,  1.9343373666517634,  0.9033306046786622)
+camera.rotation.set(-0.7636041681712437,  -0.7059371195775707,  -0.5557671900705131)
+
+// obujetに向ける
+camera.lookAt(0, 30,3)
+
 scene.add(camera)
 
 // Controls
@@ -149,6 +158,9 @@ const tick = () => {
 
     // Call tick again on the next frame
     window.requestAnimationFrame(tick)
+//    カメラの位置と向きを表示
+    console.log('poisition',camera.position)
+    console.log('rotetion',camera.rotation)
 }
 
 tick()
