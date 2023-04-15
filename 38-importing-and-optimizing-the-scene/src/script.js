@@ -80,6 +80,31 @@ gltfLoader.load(
 )
 
 /**
+ * Fireflies
+ */
+// Geometry
+const firefliesGeometry = new THREE.BufferGeometry()
+const firefliesCount = 30
+const positionArray = new Float32Array(firefliesCount * 3)
+
+for(let i = 0; i < firefliesCount; i++)
+{
+    positionArray[i * 3 + 0] = (Math.random() - 0.5) * 4 // x -1 to 1
+    positionArray[i * 3 + 1] = Math.random() * 1.5 // y 0 to 1.5
+    positionArray[i * 3 + 2] = (Math.random() - 0.5) * 4 // z -1 to 1
+}
+
+// Material
+const firefliesMaterial = new THREE.PointsMaterial({ size: 0.1, sizeAttenuation: true })
+
+// Points
+const fireflies = new THREE.Points(firefliesGeometry, firefliesMaterial)
+scene.add(fireflies)
+
+
+firefliesGeometry.setAttribute('position', new THREE.BufferAttribute(positionArray, 3))
+
+/**
  * Sizes
  */
 const sizes = {
