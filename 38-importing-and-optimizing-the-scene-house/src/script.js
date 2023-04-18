@@ -41,6 +41,34 @@ const cube = new THREE.Mesh(
 )
 
 scene.add(cube)
+/**
+ * Textures
+ */
+const bakedTexture = textureLoader.load('house-bake.jpg')
+
+/**
+ * Materials
+ */
+// Baked material
+const bakedMaterial = new THREE.MeshBasicMaterial({ map: bakedTexture })
+
+bakedTexture.flipY = false
+
+/**
+ * Model
+ */
+gltfLoader.load(
+    'house-add-color.glb',
+    (gltf) =>
+    {
+        gltf.scene.traverse((child) =>
+        {
+            child.material = bakedMaterial
+        })
+        scene.add(gltf.scene)
+    }
+)
+
 
 /**
  * Sizes
